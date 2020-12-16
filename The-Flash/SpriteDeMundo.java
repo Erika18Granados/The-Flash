@@ -13,7 +13,7 @@ public class SpriteDeMundo extends Sprite
     private World mundo;
 
     public SpriteDeMundo(ArrayList<String> nombresDeArchivos, int frames, int delay, World mundo) {
-        this.cargaSprite(nombresDeArchivos,frames, delay, mundo);
+        this.cargaSprite(nombresDeArchivos,frames, delay);
         this.mundo = mundo;
         fijaFrame(0);
     }

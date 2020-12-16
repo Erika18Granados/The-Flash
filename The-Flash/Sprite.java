@@ -17,7 +17,7 @@ public abstract class Sprite implements CargadorDeSprite, AnimadorDeSprite
     private int iterador;
 
     @Override
-    public void cargaSprite(ArrayList<String> nombresDeArchivos, int frames, int delay, World mundo) {
+    public void cargaSprite(ArrayList<String> nombresDeArchivos, int frames, int delay) {
         sprite = new LinkedList<>();
         nombresDeArchivos.forEach(nombre -> sprite.add(new GreenfootImage(nombre)));
         this.delay = delay;
