@@ -1,6 +1,5 @@
 import java.util.*;
 import greenfoot.GreenfootImage;
-import greenfoot.World;
 import greenfoot.Greenfoot;
 
 /**

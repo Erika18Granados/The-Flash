@@ -1,6 +1,6 @@
 import greenfoot.Actor;
 import greenfoot.World;
-import greenfoot.MouseInfo;
+import greenfoot.Greenfoot;
 import java.util.ArrayList;
 
 /**
@@ -20,32 +20,37 @@ public abstract class Boton extends Actor
     private Sprite spriteBoton;
     private int x;
     private int y;
+    private boolean presionado;
 
     public void cargaBoton(ArrayList<String> nombresDeArchivos, int x, int y, World mundo)
     {
         this.x = x;
         this.y = y;
+        presionado = false;
         mundo.addObject(this, this.x, this.y);
 
         spriteBoton = new SpriteDeActor(nombresDeArchivos, framesBoton, delayBoton, this);
     }
 
     public void muestraBoton(int frame) {
-        if(frame == 1) {
-            spriteBoton.fijaFrame(0);
-        } else {
-            spriteBoton.fijaFrame(1);
-        }
+        spriteBoton.fijaFrame(frame);
     }
 
-    public boolean estaPresionado(MouseInfo infoDeMouse) {
-        if(infoDeMouse.getButton() == 1 &&
-            infoDeMouse.getX() > x && infoDeMouse.getX() < x + spriteBoton.obtenFrame(spriteBoton.obtenIterador()).getWidth() &&
-            infoDeMouse.getY() > y && infoDeMouse.getY() < y + spriteBoton.obtenFrame(spriteBoton.obtenIterador()).getHeight()) {
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
+    public boolean estaClickeado() {
+        if(Greenfoot.mouseClicked(this))
+        {
+            spriteBoton.fijaFrame(1);
             System.out.println("Boton presionado!");
-            return true;
-        } else {
-            return false;
+            presionado = true;
         }
+        return presionado;
     }
 }

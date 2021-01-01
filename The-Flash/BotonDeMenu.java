@@ -13,13 +13,19 @@ public class BotonDeMenu extends Boton
     // Se le podria pasar la pantalla de records, nuevo nivel, etc...
     public BotonDeMenu(ArrayList<String> nombresDeArchivos, int x, int y, World mundo, int numeroDeBoton) {
         cargaBoton(nombresDeArchivos, x, y, mundo);
-        
         this.numeroDeBoton = numeroDeBoton;
+        muestraBoton(0);
+    }
+    
+    public void cambiaPantalla() {
+    
     }
     
     @Override
     public void act() {
-        muestraBoton(1);
-        //estaPresionado();
+        if(estaClickeado())
+        {
+            System.out.println("Boton de menu #" + numeroDeBoton + "presionado!");
+        }
     }
 }
