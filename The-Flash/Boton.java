@@ -22,7 +22,7 @@ public abstract class Boton extends Actor
     private int y;
     private boolean presionado;
 
-    public void cargaBoton(ArrayList<String> nombresDeArchivos, int x, int y, World mundo)
+    public void cargaBoton(ArrayList<String> nombresDeArchivos, int x , int y, World mundo)
     {
         this.x = x;
         this.y = y;
@@ -48,8 +48,12 @@ public abstract class Boton extends Actor
         if(Greenfoot.mouseClicked(this))
         {
             spriteBoton.fijaFrame(1);
-            System.out.println("Boton presionado!");
+            System.out.println("Boton presionado!");   
             presionado = true;
+            
+        }else {
+            spriteBoton.fijaFrame(0);
+            presionado = false;
         }
         return presionado;
     }

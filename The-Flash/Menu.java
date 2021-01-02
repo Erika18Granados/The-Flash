@@ -11,34 +11,16 @@ import greenfoot.Actor; // PRUEBA
  * @Angel Maldonado (your name) 
  * @12/16/20
  */
-public class Menu extends World
+public class Menu extends Pantalla
 {   
-    private Boton boton;
-    //private ArrayList<Boton> botones;
-    private ArrayList<String> nombresDeArchivosDeSprite;
+    private ArrayList<Boton> botones;
     private Sprite spriteMenu;
-    // Crear atributo para la generalizacion de input-jugador
-
     public Menu() {
-        super(ResolucionDePantalla.ANCHO_PX, ResolucionDePantalla.ALTO_PX, 1);
-        //this.botones = new ArrayList<Boton>();
-        preparaMenu();
+        botones = new ArrayList<Boton>();
+        CargadorDePantalla cargadorDePantalla = new CargadorDePantallaDeMenu(botones);
+        cargadorDePantalla.cargaPantallaDeMenu(botones,spriteMenu);
     }
 
-    private void preparaMenu() {
-        nombresDeArchivosDeSprite = new ArrayList<String>();
-        for (int iterador = 1; iterador <= 15; ++iterador) {
-            nombresDeArchivosDeSprite.add("images/menu/principal/flash/flash-" + iterador + ".png");
-        }
-        spriteMenu = new SpriteDeMundo(nombresDeArchivosDeSprite, 15, 5, this);
-        
-        nombresDeArchivosDeSprite.clear();
-        nombresDeArchivosDeSprite.add("images/menu/principal/botones/jugar/[normal]jugar.png");
-        nombresDeArchivosDeSprite.add("images/menu/principal/botones/jugar/[hover]jugar.png");
-        
-        boton = new BotonDeMenu(nombresDeArchivosDeSprite, 100, 50, this, 1);
-        addObject(boton, boton.getX(), boton.getY());
-    }
 
     public void act() {
         spriteMenu.animaSprite();
