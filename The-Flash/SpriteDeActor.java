@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.ArrayList;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 
