@@ -45,10 +45,10 @@ public abstract class Boton extends Actor
     }
     
     public boolean estaClickeado() {
-        if(Greenfoot.mouseClicked(this))
+        if(Greenfoot.mousePressed(this))
         {
             spriteBoton.fijaFrame(1);
-            System.out.println("Boton presionado!");   
+            //System.out.println("Boton presionado!");   
             presionado = true;
             
         }else {

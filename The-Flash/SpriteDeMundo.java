@@ -24,6 +24,7 @@ public class SpriteDeMundo extends Sprite
         mundo.setBackground(this.obtenFrame(this.obtenIterador()));
     }
 
+    @Override
     public void animaSprite() {
         if(this.obtenIteradorDeListaDeSprite(this.obtenIterador()).hasNext()) {
             mundo.setBackground(this.obtenFrame(this.obtenIterador()));
