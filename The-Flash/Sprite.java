@@ -24,6 +24,8 @@ public abstract class Sprite implements CargadorDeSprite, AnimadorDeSprite
         iterador = 0;
     }
     
+    public abstract void animaSprite();
+    
     public void agregaFrame(GreenfootImage frame) {
         sprite.add(frame);
     }
