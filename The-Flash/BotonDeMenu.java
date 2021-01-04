@@ -16,28 +16,27 @@ public class BotonDeMenu extends Boton
     public BotonDeMenu(ArrayList<String> nombresDeArchivos, int x, int y, Pantalla pantalla, int numeroDeBoton, CargadorDePantalla cargadorDePantalla) {
         cargaBoton(nombresDeArchivos, x, y, pantalla);
         this.numeroDeBoton = numeroDeBoton;
-        muestraBoton(0);
         this.cargadorDePantalla = cargadorDePantalla;
-        //pantalla = nuevaPantalla;
-        //Greenfoot.setWorld(pantalla);
-    }
-    
-    public BotonDeMenu(ArrayList<String> nombresDeArchivos, int x, int y, Pantalla pantalla, int numeroDeBoton) {
-        cargaBoton(nombresDeArchivos, x, y, pantalla);
-        this.numeroDeBoton = numeroDeBoton;
         muestraBoton(0);
     }
-    
+
     public void cambiaPantalla() {
-        Greenfoot.setWorld(cargadorDePantalla.cargaPantalla());
+        Greenfoot.setWorld(cargadorDePantalla.obtenPantalla());
     }
-    
+
     @Override
     public void act() {
         if(estaClickeado())
         {
-            //System.out.println("Boton de menu # " + numeroDeBoton + " presionado!");
-            cambiaPantalla();
+            if(cargadorDePantalla != null)
+            {
+                //System.out.println("Boton de menu # " + numeroDeBoton + " presionado!");
+                cambiaPantalla();
+                if(cargadorDePantalla.obtenPantalla().obtenCinematica() != null)
+                {
+                    cargadorDePantalla.obtenPantalla().reproduceCinematica();
+                }
+            }
         }
     }
 }

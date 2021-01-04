@@ -1,48 +1,47 @@
 import java.util.ArrayList;
 import greenfoot.GreenfootImage;
+import greenfoot.GreenfootSound;
 /**
- * Write a description of class CargadorDePantalla here.
+ * Esta clase abstracta funciona de intermediaria entre cualquier clase que cree un nuevo mundo, de manera que se van a hacer varios
+ * CargadoresDePantalla para cada clase que herede de World y en estos cargadores se añadiran los actores y archivos de fondo
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
 public abstract class CargadorDePantalla
 {   
-    private ArrayList<String> nombresDeArchivosDePantalla;
-    private int delay;
+    private Pantalla pantalla;
     
-    public abstract Pantalla cargaPantalla();
+    // preparaPantalla anade todos los objetos a la pantalla, estos objetos pueden tener enlaces/CargadoresDePantalla a otras Pantalla(s)
+    public abstract void preparaPantalla(ArrayList<CargadorDePantalla> cargadorDePantalla);
     
+    public void agregaSonido(GreenfootSound sonido) {
+        pantalla.estableceSonido(sonido);
+    }
+    
+    // Carga una nueva pantalla con una cinematica
+    public Pantalla cargaPantallaConCinematica(GifImage cinematica, GreenfootSound sonido) {
+        return pantalla = new Pantalla(cinematica, sonido);
+    }
+    
+    // Carga una nueva pantalla con una sola imagen de fondo
+    public Pantalla cargaPantallaConImagen(GreenfootImage imagen) {
+        return pantalla = new Pantalla(imagen);
+    }
+
     // Carga una nueva pantalla con sprites
-    public Pantalla cargaPantallaConSprite(int delay, ArrayList<String> nombresDeArchivosDePantalla) {
-        Pantalla pantallaConSprite;
-        if(nombresDeArchivosDePantalla != null) {
-            if(nombresDeArchivosDePantalla.size() > 1)
-            {
-                this.delay = delay;
-                pantallaConSprite = new Pantalla(nombresDeArchivosDePantalla, nombresDeArchivosDePantalla.size(), delay);
-            }
-            else
-                pantallaConSprite = new Pantalla(new GreenfootImage(nombresDeArchivosDePantalla.get(0)));
-        } else
-            pantallaConSprite = new Pantalla();
-        return pantallaConSprite;
+    public Pantalla cargaPantallaConSprite(ArrayList<String> nombresDeArchivosDePantalla, int delay) {
+        return pantalla = new Pantalla(nombresDeArchivosDePantalla, nombresDeArchivosDePantalla.size(), delay);
     }
-    
-    public void cargaArchivosDePantalla(ArrayList<String> nombresDeArchivosDePantalla) {
-        this.nombresDeArchivosDePantalla = nombresDeArchivosDePantalla;
+
+    // Carga una nueva pantalla en blanco
+    public Pantalla cargaPantallaEnBlanco() {
+        return pantalla = new Pantalla();
     }
-    
-    public void estableceDelay(int delay) {
-        this.delay = delay;
-    }
-    
-    public int obtenDelay() {
-        return delay;
-    }
-    
-    public ArrayList obtenNombresDeArchivosDePantalla() {
-        return nombresDeArchivosDePantalla;
+
+    // Obten la pantalla del cargador
+    public Pantalla obtenPantalla() {
+        return pantalla;
     }
 }
 
