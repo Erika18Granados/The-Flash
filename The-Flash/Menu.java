@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import greenfoot.World;
 import greenfoot.MouseInfo;
-import greenfoot.Actor; // PRUEBA
+import greenfoot.GreenfootImage;
 
 /**
  * Esta clase es un menu que contiene un arreglo de BotonDeMenu, los cuales realizan una accion dependiendo del Boton
@@ -11,18 +12,21 @@ import greenfoot.Actor; // PRUEBA
  * @Angel Maldonado (your name) 
  * @12/16/20
  */
-public class Menu extends Pantalla
+public abstract class Menu extends Pantalla
 {   
-    private ArrayList<Boton> botones;
-    private Sprite spriteMenu;
-    public Menu() {
-        botones = new ArrayList<Boton>();
-        CargadorDePantalla cargadorDePantalla = new CargadorDePantallaDeMenu(botones);
-        cargadorDePantalla.cargaPantallaDeMenu(botones,spriteMenu);
+    /*
+    CargadorDePantallaDeMenu cargadorDePantallaDeMenu;
+    ArrayList<CargadorDePantalla> cargadorDePantallaInstrucciones;*/
+    // Submenu
+    public void cargaSubMenu(CargadorDePantallaDeMenu cargadorDeMenu, CargadorDePantallaDeMenu cargadorDeSubmenu) {
+        
     }
-
-
-    public void act() {
-        spriteMenu.animaSprite();
+    
+    // Botones de regreso
+    public void cargaMenu(CargadorDePantallaDeMenu cargadorDePantallaDeMenu, ArrayList<CargadorDePantalla> cargadoresDePantallaDeBotones) {
+        // Prepara la pantalla del menu
+        cargadorDePantallaDeMenu.preparaPantalla(cargadoresDePantallaDeBotones);
+        // Prepara la pantalla de los botones
+        cargadoresDePantallaDeBotones.forEach(cargadorDePantalla -> cargadorDePantalla.preparaPantalla(new ArrayList<CargadorDePantalla>(Arrays.asList(cargadorDePantallaDeMenu)))); 
     }
 }

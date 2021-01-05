@@ -1,66 +1,88 @@
 import java.util.ArrayList;
-import greenfoot.World;
+import greenfoot.GreenfootImage;
+import greenfoot.GreenfootSound;
 
 /**
- * Write a description of class CargadorDePantallaDeMenu here.
+ * Clase para crear instancias de CargadorDePantalla y utilizarlas en los cargadores de menu
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class CargadorDePantallaDeMenu extends CargadorDePantalla  
+public abstract class CargadorDePantallaDeMenu extends CargadorDePantalla
 {
-    private ArrayList<Boton> botones;
-    private ArrayList<String> nombresDeArchivosDeSprite;
-    private Sprite spriteMenu;
-    public CargadorDePantallaDeMenu(ArrayList<Boton> botones) {
-        nombresDeArchivosDeSprite = new ArrayList<String>();
-        this.botones = botones;
+    public ArrayList<String> nombresDeArchivosDeBoton;
+    public ArrayList<Integer> coordenadasDeBotones;
+    public int numeroDeBotones;
+
+    // Una sola imagen de fondo
+    public Pantalla cargaMenu(ArrayList<String> nombresDeArchivosDeBoton, ArrayList<Integer> coordenadasDeBotones, int numeroDeBotones, GreenfootImage imagen) {
+        this.nombresDeArchivosDeBoton = new ArrayList<String>();
+        this.coordenadasDeBotones = new ArrayList<Integer>();
+
+        this.nombresDeArchivosDeBoton.addAll(nombresDeArchivosDeBoton);
+        this.coordenadasDeBotones.addAll(coordenadasDeBotones);
+        this.numeroDeBotones = numeroDeBotones;
+
+        return cargaPantallaConImagen(imagen);
+    }
+
+    // Un sprite de fondo
+    public Pantalla cargaMenu(ArrayList<String> nombresDeArchivosDeBoton, ArrayList<Integer> coordenadasDeBotones, int numeroDeBotones,
+    ArrayList<String> nombresDeArchivosDeMenu, int delay) {
+        this.nombresDeArchivosDeBoton = new ArrayList<String>();
+        this.coordenadasDeBotones = new ArrayList<Integer>();
+
+        this.nombresDeArchivosDeBoton.addAll(nombresDeArchivosDeBoton);
+        this.coordenadasDeBotones.addAll(coordenadasDeBotones);
+        this.numeroDeBotones = numeroDeBotones;
+
+        return cargaPantallaConSprite(nombresDeArchivosDeMenu, delay);
+    }
+
+    // Menu sin fondo
+    public Pantalla cargaMenu(ArrayList<String> nombresDeArchivosDeBoton, ArrayList<Integer> coordenadasDeBotones, int numeroDeBotones) {
+        this.nombresDeArchivosDeBoton = new ArrayList<String>();
+        this.coordenadasDeBotones = new ArrayList<Integer>();
+
+        this.nombresDeArchivosDeBoton.addAll(nombresDeArchivosDeBoton);
+        this.coordenadasDeBotones.addAll(coordenadasDeBotones);
+        this.numeroDeBotones = numeroDeBotones;
+
+        return cargaPantallaEnBlanco();
     }
 
     @Override
-    public Pantalla cargaPantallaDeMenu(ArrayList<Boton> botones,Sprite spriteMenu) {
-        Pantalla pantallaDeMenu =cargaPantalla();
-        preparaMenu(pantallaDeMenu,botones,spriteMenu);
-        return (pantallaDeMenu);
+    public void preparaPantalla(ArrayList<CargadorDePantalla> cargadorDePantalla) {
+        preparaMenu(cargadorDePantalla);
+        // Si se cargo algun sonido al menu
+        if(obtenPantalla().obtenSonido() != null) {
+            obtenPantalla().obtenSonido().pause(); // HACER QUE SE PONGA PLAY SOLO CUANDO SE COMIENZA EL MUNDO (Cambiar a play para probar)
+        }
     }
 
-    private void preparaMenu(Pantalla pantallaDeMenu,ArrayList<Boton> botonesDeMenu,Sprite spriteMenu) {
-        for (int iterador = 1; iterador <= 15; ++iterador) {
-            nombresDeArchivosDeSprite.add("images/menu/principal/flash/flash-" + iterador + ".png");
-        }
-        spriteMenu = new SpriteDeMundo(nombresDeArchivosDeSprite, 15, 5, pantallaDeMenu);
-        spriteMenu = this.spriteMenu;
-
-        nombresDeArchivosDeSprite.clear();
-        for(int iterador = 1; iterador <= 4; ++iterador) {
-
-            switch(iterador)
+    public void preparaMenu(ArrayList<CargadorDePantalla> cargadoresDeBotones) {
+        if(cargadoresDeBotones != null)
+        {
+            for(int boton = 0, archivoDeBoton = 0; boton < numeroDeBotones; boton++, archivoDeBoton+=2)
             {
-                case 1://jugar
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/jugar/[normal]jugar.png");
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/jugar/[hover]jugar.png");
-                break;
-
-                case 2://instrucciones
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/instrucciones/[normal]instrucciones.png");
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/instrucciones/[hover]instrucciones.png");
-                break;
-
-                case 3://records
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/records/[normal]records.png");
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/records/[hover]records.png");
-                break;
-
-                case 4://salir
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/salir/[normal]salir.png");
-                nombresDeArchivosDeSprite.add("images/menu/principal/botones/salir/[hover]salir.png");
-                break;
+                obtenPantalla().addObject(cargaBoton(new ArrayList(nombresDeArchivosDeBoton.subList(archivoDeBoton, archivoDeBoton+2)),
+                        coordenadasDeBotones.get(archivoDeBoton), coordenadasDeBotones.get(archivoDeBoton+1),
+                        obtenPantalla(), boton, cargadoresDeBotones.get(boton)),
+                    coordenadasDeBotones.get(archivoDeBoton), coordenadasDeBotones.get(archivoDeBoton+1));
             }
-            botones.add(new BotonDeMenu(nombresDeArchivosDeSprite, 100, 80*(iterador) , pantallaDeMenu, iterador, pantallaDeMenu));
-            nombresDeArchivosDeSprite.clear();
-            pantallaDeMenu.addObject(botones.get(iterador-1), botones.get(iterador-1).getX(), botones.get(iterador-1).getY());
-
         }
-        botonesDeMenu = botones;
+        else
+            for(int boton = 0, archivoDeBoton = 0; boton < numeroDeBotones; boton++, archivoDeBoton+=2)
+            {
+                obtenPantalla().addObject(cargaBoton(new ArrayList(nombresDeArchivosDeBoton.subList(archivoDeBoton, archivoDeBoton+2)),
+                        coordenadasDeBotones.get(archivoDeBoton), coordenadasDeBotones.get(archivoDeBoton+1),
+                        obtenPantalla(), boton, null),
+                    coordenadasDeBotones.get(archivoDeBoton), coordenadasDeBotones.get(archivoDeBoton+1));
+            }
+    }
+
+    public Boton cargaBoton(ArrayList<String> archivosDeBoton, int xBoton, int yBoton, Pantalla pantallaDeMenu, int idBoton, CargadorDePantalla cargadorDePantallaDeBoton) {
+        BotonDeMenu botonDeMenu = new BotonDeMenu(archivosDeBoton, xBoton, yBoton, pantallaDeMenu, idBoton, cargadorDePantallaDeBoton);
+        return botonDeMenu;
     }
 }
