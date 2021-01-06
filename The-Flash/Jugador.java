@@ -13,8 +13,8 @@ import greenfoot.Actor;
  */
 public class Jugador implements InterfazDeJugador
 {
-    Personaje personaje;
-    MouseInfo infoDeMouseDeJugador;
+    private Personaje personaje;
+    private MouseInfo infoDeMouseDeJugador;
     private String ultimaTeclaPresionada;
     /**
      * Constructor for objects of class Jugador
@@ -23,7 +23,8 @@ public class Jugador implements InterfazDeJugador
     {
 
     }
-
+    
+    // Este constructor es utilizado por el personaje principal
     public Jugador(Personaje personajeQueControla) {
         personaje = personajeQueControla;
     }
@@ -34,9 +35,8 @@ public class Jugador implements InterfazDeJugador
     }
 
     @Override
-    public String pideTecla() {
-        ultimaTeclaPresionada = Greenfoot.getKey();
-        return ultimaTeclaPresionada;
+    public boolean pideTecla(String tecla) {
+        return Greenfoot.isKeyDown(tecla);
     }
 
     @Override
@@ -66,6 +66,11 @@ public class Jugador implements InterfazDeJugador
             }
         }
         return infoDeMouseDeJugador;
+    }
+    
+    @Override() 
+    public Personaje obtenPersonaje(){
+        return personaje;
     }
 
     @Override
@@ -101,40 +106,66 @@ public class Jugador implements InterfazDeJugador
     }
 
     @Override
-    public void mueveme(int velocidad) {
-        // Estas variables deben ser del Personaje
-        int movimientoEnY = 0;
-        int movimientoEnX = 0;
-
-        pideTecla();
-
-        if(ultimaTeclaPresionada != null)
+    public void muevePersonaje() {
+        if(Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("w")) {
+            personaje.muevePersonaje(DireccionDePersonaje.ARRIBA);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        if(Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("s")) {
+            personaje.muevePersonaje(DireccionDePersonaje.ABAJO);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")) {
+            personaje.muevePersonaje(DireccionDePersonaje.IZQUIERDA);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")) {
+            personaje.muevePersonaje(DireccionDePersonaje.DERECHA);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        // ARRIBA IZQUIERDA
+        if(Greenfoot.isKeyDown("up") && Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("w") && Greenfoot.isKeyDown("a")) {
+            personaje.muevePersonaje(DireccionDePersonaje.DIAG_SUP_IZQ);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        // ARRIBA DERECHA
+        if(Greenfoot.isKeyDown("up") && Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("w") && Greenfoot.isKeyDown("d")) {
+            personaje.muevePersonaje(DireccionDePersonaje.DIAG_SUP_DER);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        // ABAJO IZQUIERDA
+        if(Greenfoot.isKeyDown("down") && Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("s") && Greenfoot.isKeyDown("a")) {
+            personaje.muevePersonaje(DireccionDePersonaje.DIAG_INF_IZQ);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        else
+        // ABAJO DERECHA
+        if(Greenfoot.isKeyDown("down") && Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("s") && Greenfoot.isKeyDown("d")) {
+            personaje.muevePersonaje(DireccionDePersonaje.DIAG_INF_DER);
+            personaje.animaSprite(Flash.SPRITE_CORRIENDO);
+        }
+        // ESTATICO
+        else
         {
-            System.out.println("JUGADOR PRESIONO: " + ultimaTeclaPresionada);
-            switch(ultimaTeclaPresionada)
+            if(personaje.obtenVelocidad() == Flash.SUPER_VELOCIDAD)
             {
-                case "up":
-                movimientoEnY = -velocidad;
-                personaje.turnTowards(personaje.getX(), 0);
-                /*
-                 * personaje.direccion = CharacterDirection.UP <--- Hacer esto para todas las direcciones
-                 */
-
-                break;
-                case "down":
-                movimientoEnY = velocidad;
-                personaje.turnTowards(personaje.getX(), personaje.getWorld().getHeight());
-                break;
-                case "left":
-                movimientoEnX = -velocidad;
-                personaje.turnTowards(0, personaje.getY());
-                break;
-                case "right":
-                movimientoEnX = velocidad;
-                personaje.turnTowards(personaje.getWorld().getWidth(), personaje.getY());
-                break;
+                personaje.muevePersonaje(DireccionDePersonaje.ESTATICO);
+                personaje.animaSprite(Flash.SPRITE_STATIC);
+            } else
+            {
+                personaje.muevePersonaje(DireccionDePersonaje.ESTATICO);
+                personaje.animaSprite(Flash.SPRITE_STATIC_SUPER);
             }
-            personaje.setLocation(personaje.getX() + movimientoEnX, personaje.getY() + movimientoEnY);
+            
+            /*
+            personaje.estableceSprite(1);
+            personaje.obtenSprite(1).resume();*/
         }
     }
 }

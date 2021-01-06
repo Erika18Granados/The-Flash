@@ -15,7 +15,7 @@ public class MenuPrincipal extends Menu
     public MenuPrincipal()
     {
         ArrayList<CargadorDePantalla> cargadoresDePantallaDeBotones = new ArrayList<CargadorDePantalla>();
-        cargadoresDePantallaDeBotones.add(new CinematicaFuerzaDeVelocidad());
+        cargadoresDePantallaDeBotones.add(new CinematicaDeInicio());
         cargadoresDePantallaDeBotones.add(new CargadorDePantallaDeInstrucciones());
         cargadoresDePantallaDeBotones.add(new CargadorDePantallaDeRecords());
         cargadoresDePantallaDeBotones.add(new CargadorDePantallaDeSalir());

@@ -13,6 +13,6 @@ public class CinematicaDeInicio extends CargadorDeCinematica
      */
     public CinematicaDeInicio()
     {
-        cargaCinematica(new GifImage("images/cinematicas/intro.gif"), new GreenfootSound("sounds/cinematicas/cumbia_chida.mp3"));
+        cargaCinematica(new GifImage("images/cinematicas/intro.gif"), new GreenfootSound("sounds/cinematicas/intro.mp3"));
     }
 }

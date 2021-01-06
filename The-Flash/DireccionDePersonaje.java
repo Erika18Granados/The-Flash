@@ -9,5 +9,10 @@ public enum DireccionDePersonaje
     ARRIBA,
     ABAJO,
     IZQUIERDA,
-    DERECHA
+    DERECHA,
+    DIAG_SUP_IZQ,
+    DIAG_SUP_DER,
+    DIAG_INF_IZQ,
+    DIAG_INF_DER,
+    ESTATICO
 }

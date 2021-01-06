@@ -12,8 +12,9 @@ import greenfoot.Actor;
 public interface InterfazDeJugador  
 {
     String pideTexto();
-    String pideTecla();
+    boolean pideTecla(String tecla);
     MouseInfo pideInfoDeMouse();
+    Personaje obtenPersonaje();
     boolean preguntaSiMeClickearon(Actor actor);
-    void mueveme(int velocidad);
+    void muevePersonaje();
 }

@@ -13,6 +13,6 @@ public class CinematicaFuerzaDeVelocidad extends CargadorDeCinematica
      */
     public CinematicaFuerzaDeVelocidad()
     {
-        cargaCinematica(new GifImage("images/cinematicas/fuerza-de-velocidad.gif"), new GreenfootSound("sounds/cinematicas/cumbia_chida.mp3"));
+        cargaCinematica(new GifImage("images/cinematicas/fuerza-de-velocidad.gif"), new GreenfootSound("sounds/cinematicas/mama.mp3"));
     }
 }

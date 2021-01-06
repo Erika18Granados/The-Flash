@@ -8,4 +8,5 @@ public final class ResolucionDePantalla
 {
     static final int ANCHO_PX = 800;
     static final int ALTO_PX = 450;
+    static final int LIM_AREA_JUEGO = 210;
 }
