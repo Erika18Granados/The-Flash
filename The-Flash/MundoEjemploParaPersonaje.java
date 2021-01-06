@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MundoEjemploParaPersonaje extends World
+public class MundoEjemploParaPersonaje extends Pantalla
 {
 
     /**
@@ -14,9 +14,9 @@ public class MundoEjemploParaPersonaje extends World
      * 
      */
     public MundoEjemploParaPersonaje()
-    {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1);
-        addObject(new Personaje(), 100, 100);
+    {
+        new Flash(this);
+        new FlashReverso(this);
+        new CargadorDePantallaDeMisiones();
     }
 }

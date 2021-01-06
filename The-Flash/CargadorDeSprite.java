@@ -10,4 +10,5 @@ import greenfoot.World;
 public interface CargadorDeSprite  
 {
     void cargaSprite(ArrayList<String> nombresDeArchivos, int frames, int delay);
+    void cargaSprite(ArrayList<String> nombresDeArchivos, int delay);
 }
