@@ -9,14 +9,15 @@ import greenfoot.GreenfootImage;
  */
 public abstract class Item extends Actor
 {
-    /**
-     * Constructor for objects of class Item
-     */
+    private GreenfootImage imagen;
+
     public void cargaItem(Pantalla pantalla, int x, int y, GreenfootImage imagen)
     {
+        this.imagen = imagen;
         pantalla.addObject(this, x, y);
-        setImage(imagen);
+        setImage(this.imagen);
     }
     
     public abstract void efecto();
+    public abstract boolean colisiona();
 }

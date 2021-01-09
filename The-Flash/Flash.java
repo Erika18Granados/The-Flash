@@ -18,7 +18,7 @@ public class Flash extends Personaje
     public static final int VELOCIDAD_9 = 10;
     
     private SimpleTimer cronometro;
-    private Rayo rayo;
+    private Item mira;
     private boolean cargandoRayo;
 
     /**
@@ -29,7 +29,7 @@ public class Flash extends Personaje
         ArrayList<GifImage> spritesDePersonaje = new ArrayList<GifImage>();
         cronometro = new SimpleTimer();
         cargandoRayo = false;
-        //cronometro = new Counter("Supervelocidad: ");
+        
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-static-der/flash-static.gif"));
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-static-der/flash-static-super.gif"));
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-corriendo-der/flash-corriendo-der.gif"));
@@ -37,7 +37,16 @@ public class Flash extends Personaje
         spritesDePersonaje.add(new GifImage("images/personajes/flash/cargando-rayo/flash-rayo.gif"));
 
         creaPersonaje(SUPER_VELOCIDAD, new Jugador(this), spritesDePersonaje, pantalla, 100, 400);
-        rayo = new Rayo(pantalla, obtenInterfazDeJugador());
+        
+        // Tamano original 18 x 33
+        ajustaSprite(18*ESCALAR_SPRITES, 33*ESCALAR_SPRITES, SPRITE_STATIC);
+        ajustaSprite(18*ESCALAR_SPRITES, 33*ESCALAR_SPRITES, SPRITE_STATIC_SUPER);
+        // Tamano original 23 x 29
+        ajustaSprite(23*ESCALAR_SPRITES, 29*ESCALAR_SPRITES, SPRITE_CORRIENDO);
+        // Tamano original 64 x 65
+        ajustaSprite(64*ESCALAR_SPRITES, 65*ESCALAR_SPRITES, SPRITE_CARGANDO_RAYO);
+        
+        mira = new Mira(pantalla, obtenInterfazDeJugador());
     }
 
     @Override
@@ -51,6 +60,8 @@ public class Flash extends Personaje
 
     @Override
     public void act() {
+        
+        //animaSprite(0);
         obtenInterfazDeJugador().muevePersonaje();
         colisiona();
         if(obtenInterfazDeJugador().pideTecla("1"))
@@ -72,11 +83,11 @@ public class Flash extends Personaje
             animaSprite(SPRITE_CARGANDO_RAYO);
             if(obtenInterfazDeJugador().pideInfoDeMouse() != null)
             {
-                rayo.efecto();
+                mira.efecto();
             }
         } else {
             cargandoRayo = false;
-            //rayo.move(rayo.distanciaPorCubrir);
+            mira.setLocation(Mira.X_INI_MIRA, Mira.Y_INI_MIRA);
         }
     }
 }
