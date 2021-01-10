@@ -30,6 +30,11 @@ public class GifImage
     /** Whether the animation is paused or not. */
     private boolean pause;
 
+    public void resizeImages(int x, int y)
+    {
+        for (int i=0; i<images.length; i++) images[i].scale(x, y);
+    }
+    
     /**
      * Set the image of the actor. If the image is a normal picture, it will be displayed as normal.
      * If it's an animated GIF file then it will be displayed as an animated actor.

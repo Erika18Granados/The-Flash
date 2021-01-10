@@ -12,6 +12,7 @@ public abstract class Personaje extends Actor
 {
     // VELOCIDAD CONSTANTE EN CASO DE NO TENER VELOCIDAD INICIAL
     private static final int VELOCIDAD = 5;
+    public static final int ESCALAR_SPRITES = 2;
     
     private InterfazDeJugador interfazDeJugador;
     private DireccionDePersonaje direccion;
@@ -172,6 +173,10 @@ public abstract class Personaje extends Actor
     public void animaSprite(int numeroDeSprite) {
         estableceSprite(numeroDeSprite);
         obtenSprite(numeroDeSprite).resume();
+    }
+    
+    public void ajustaSprite(int ancho, int alto, int sprite) {
+        obtenSprite(sprite).resizeImages(ancho, alto);
     }
     /*
     @Override
