@@ -14,12 +14,14 @@ public class Flash extends Personaje
     public static final int SPRITE_CORRIENDO = 2;
     public static final int SPRITE_IMPACTADO = 3;
     public static final int SPRITE_CARGANDO_RAYO = 4;
-    public static final int SUPER_VELOCIDAD = 4;
-    public static final int VELOCIDAD_9 = 10;
+    private static final int VIDA_FLASH = 4000;
     
-    private SimpleTimer cronometro;
     private Item mira;
     private boolean cargandoRayo;
+    private int vida;
+    
+    private Counter vidaFlash;
+
 
     /**
      * Constructor for objects of class Flash
@@ -27,16 +29,21 @@ public class Flash extends Personaje
     public Flash(Pantalla pantalla)
     {
         ArrayList<GifImage> spritesDePersonaje = new ArrayList<GifImage>();
-        cronometro = new SimpleTimer();
         cargandoRayo = false;
+        
+        vidaFlash = new Counter("VIDA FLASH: ");
+        vida = VIDA_FLASH;
+        pantalla.addObject(vidaFlash, 120, 100);
+        vidaFlash.setValue(vida);
         
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-static-der/flash-static.gif"));
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-static-der/flash-static-super.gif"));
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-corriendo-der/flash-corriendo-der.gif"));
         spritesDePersonaje.add(new GifImage("images/personajes/flash/flash-impactado-der/flash-impactado.gif"));
-        spritesDePersonaje.add(new GifImage("images/personajes/flash/cargando-rayo/flash-rayo.gif"));
+        spritesDePersonaje.add(new GifImage("images/personajes/flash/cargando-rayo/flash-rayo.gif"));    
+        //spritesDePersonaje.add(new GifImage("images/personajes/flash/cargando-rayo/flash-rayo.gif"));
 
-        creaPersonaje(SUPER_VELOCIDAD, new Jugador(this), spritesDePersonaje, pantalla, 100, 400);
+        creaPersonaje(Velocidades.VELOCIDAD_FLASH, new Jugador(this), spritesDePersonaje, pantalla, 100, 400, VIDA_FLASH);
         
         // Tamano original 18 x 33
         ajustaSprite(18*ESCALAR_SPRITES, 33*ESCALAR_SPRITES, SPRITE_STATIC);
@@ -50,32 +57,38 @@ public class Flash extends Personaje
     }
 
     @Override
-    public void colisiona() {
+    public boolean colisiona() {
         if(isTouching(FlashReverso.class))
         {
-            System.out.println("Colision con flash reverso");
             animaSprite(SPRITE_IMPACTADO);
+            vida-=20;
+            vidaFlash.setValue(vida);
+            return true;
         }
+        if(isTouching(Rayo.class))
+        {
+            vida-=30;
+            vidaFlash.setValue(vida);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void act() {
-        
-        //animaSprite(0);
         obtenInterfazDeJugador().muevePersonaje();
         colisiona();
         if(obtenInterfazDeJugador().pideTecla("1"))
         {
             if(cronometro.millisElapsed() > 5000)
             {
-                System.out.println("Velocidad 9 activada");
-                cambiaVelocidad(VELOCIDAD_9);
+                cambiaVelocidad(Velocidades.VELOCIDAD_9);
                 cronometro.mark();
             }
         } else 
-            if(obtenVelocidad() == VELOCIDAD_9 && cronometro.millisElapsed() > 5000)
+            if(obtenVelocidad() == Velocidades.VELOCIDAD_9 && cronometro.millisElapsed() > 5000)
             {
-                cambiaVelocidad(SUPER_VELOCIDAD);
+                cambiaVelocidad(Velocidades.VELOCIDAD_FLASH);
                 cronometro.mark();
             }
         if(obtenInterfazDeJugador().pideTecla("2"))

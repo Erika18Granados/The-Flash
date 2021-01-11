@@ -9,11 +9,11 @@ import greenfoot.GreenfootImage;
 public class Mira extends Item
 {
     public static final int X_INI_MIRA = 50;
-    public static final int Y_INI_MIRA = 50;
+    public static final int Y_INI_MIRA = 40;
     public static final int X_INI_RAYO = X_INI_MIRA*3;
     public static final int Y_INI_RAYO = Y_INI_MIRA;
     
-    private Item rayo;
+    public Item rayo;
     
     private InterfazDeJugador interfazDeJugador;
     

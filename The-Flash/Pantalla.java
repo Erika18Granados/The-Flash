@@ -55,6 +55,10 @@ public class Pantalla extends World
         return cinematica;
     }
     
+    public boolean finDeCinematica() {
+        return false;
+    }
+    
     public void estableceReproductor(boolean startStop) {
         reproductor = startStop;
     }

@@ -23,7 +23,7 @@ public class Jugador implements InterfazDeJugador
     {
 
     }
-    
+
     // Este constructor es utilizado por el personaje principal
     public Jugador(Personaje personajeQueControla) {
         personaje = personajeQueControla;
@@ -42,32 +42,9 @@ public class Jugador implements InterfazDeJugador
     @Override
     public MouseInfo pideInfoDeMouse() {
         infoDeMouseDeJugador = Greenfoot.getMouseInfo();
-        // Si se presiono algun boton (VERSION DE PRUEBA ----> COMENTAR CONDICIONAL)
-        if(infoDeMouseDeJugador != null)
-        {
-            if(infoDeMouseDeJugador.getButton() > 0)
-            {
-                switch(infoDeMouseDeJugador.getButton())
-                {
-                    // Click izquierdo
-                    case 1:
-                    System.out.println("RATON: boton izquierdo!");
-                    break;
-                    // Rueda de raton
-                    case 2:
-                    System.out.println("RATON: boton rueda!");
-                    break;
-                    // Click derecho
-                    case 3:
-                    System.out.println("RATON: boton derecho!");
-                    break;
-                }
-                System.out.println("click: (" + infoDeMouseDeJugador.getX() + ", " + infoDeMouseDeJugador.getY() + ")");
-            }
-        }
         return infoDeMouseDeJugador;
     }
-    
+
     @Override() 
     public Personaje obtenPersonaje(){
         return personaje;
@@ -78,19 +55,19 @@ public class Jugador implements InterfazDeJugador
         /* CLICK SIMPLE (SIN DRAGG)
         if(Greenfoot.mousePressed(actor))
         {
-            System.out.println("Actor clickeado! -> " + actor);
-            return true;
+        System.out.println("Actor clickeado! -> " + actor);
+        return true;
         } else
-            return false;
-        */
-        
+        return false;
+         */
+
         if(pideInfoDeMouse() != null)
         {
             // Si el cursor esta encima del actor
             if(infoDeMouseDeJugador.getActor() == actor)
             {
                 System.out.print("RATON: encima de actor -> " + actor);
-                
+
                 // Si se presiono el click derecho encima del actor
                 if(infoDeMouseDeJugador.getButton() == 1)
                 {
@@ -101,7 +78,7 @@ public class Jugador implements InterfazDeJugador
                     return false;
                 }
             } else
-            return false;
+                return false;
         }else return false;
     }
 
@@ -153,7 +130,7 @@ public class Jugador implements InterfazDeJugador
         // ESTATICO
         else
         {
-            if(personaje.obtenVelocidad() == Flash.SUPER_VELOCIDAD)
+            if(personaje.obtenVelocidad() == Velocidades.VELOCIDAD_FLASH)
             {
                 personaje.muevePersonaje(DireccionDePersonaje.ESTATICO);
                 personaje.animaSprite(Flash.SPRITE_STATIC);
@@ -162,10 +139,7 @@ public class Jugador implements InterfazDeJugador
                 personaje.muevePersonaje(DireccionDePersonaje.ESTATICO);
                 personaje.animaSprite(Flash.SPRITE_STATIC_SUPER);
             }
-            
-            /*
-            personaje.estableceSprite(1);
-            personaje.obtenSprite(1).resume();*/
+
         }
     }
 }

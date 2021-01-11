@@ -16,7 +16,10 @@ public class CargadorDePantallaDeMisiones extends CargadorDePantalla
     
     @Override
     public void preparaPantalla(ArrayList<CargadorDePantalla> cargadorDePantalla) {
-        new FlashReverso(obtenPantalla());
-        new Flash(obtenPantalla());
+        obtenPantalla().setPaintOrder(Flash.class, FlashReverso.class, HUD.class);
+        Personaje flash = new Flash(obtenPantalla());
+        Personaje flashReverso = new FlashReverso(obtenPantalla(), flash);
+        HUD hud = new HUD(flash, flashReverso, obtenPantalla());
+        
     }
 }

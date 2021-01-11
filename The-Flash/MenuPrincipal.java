@@ -9,17 +9,21 @@ import java.util.ArrayList;
 public class MenuPrincipal extends Menu
 {
     CargadorDePantalla cargadorDeMenuPrincipal;
+    ArrayList<CargadorDePantalla> cargadoresDePantallaDeBotones;
     /**
      * Constructor for objects of class MenuPrincipal
      */
     public MenuPrincipal()
     {
-        ArrayList<CargadorDePantalla> cargadoresDePantallaDeBotones = new ArrayList<CargadorDePantalla>();
+        cargadoresDePantallaDeBotones = new ArrayList<CargadorDePantalla>();
         cargadoresDePantallaDeBotones.add(new CinematicaDeInicio());
         cargadoresDePantallaDeBotones.add(new CargadorDePantallaDeInstrucciones());
         cargadoresDePantallaDeBotones.add(new CargadorDePantallaDeRecords());
         cargadoresDePantallaDeBotones.add(new CargadorDePantallaDeSalir());
         
         cargaMenu(new CargadorDeMenuPrincipal(), cargadoresDePantallaDeBotones);
+    }
+    
+    public void act() {
     }
 }

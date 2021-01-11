@@ -34,7 +34,7 @@ public class GifImage
     {
         for (int i=0; i<images.length; i++) images[i].scale(x, y);
     }
-    
+
     /**
      * Set the image of the actor. If the image is a normal picture, it will be displayed as normal.
      * If it's an animated GIF file then it will be displayed as an animated actor.
@@ -141,7 +141,7 @@ public class GifImage
         public int y;
         public int width;
         public int height;
-        
+
         public Rectangle(int x, int y, int width, int height)
         {
             this.x = x;
@@ -150,7 +150,7 @@ public class GifImage
             this.height = height;
         }
     }
-    
+
     /**
      * Class GifDecoder - Decodes a GIF file into one or more frames. <br><br>
      * 
@@ -294,7 +294,7 @@ public class GifImage
             int b = (rgb & 0xFF);
             return new Color(r,g,b);
         }
-        
+
         /**
          * Gets display duration for specified frame.
          * 
@@ -359,7 +359,7 @@ public class GifImage
                 if (lastImage != null) {
                     image.clear();
                     image.drawImage(lastImage, 0, 0);
-                    
+
                     // copy pixels
 
                     if (lastDispose == 2) {
@@ -391,14 +391,14 @@ public class GifImage
                     if (iline >= ih) {
                         pass++;
                         switch (pass) {
-                        case 2:
+                            case 2:
                             iline = 4;
                             break;
-                        case 3:
+                            case 3:
                             iline = 2;
                             inc = 4;
                             break;
-                        case 4:
+                            case 4:
                             iline = 1;
                             inc = 2;
                         }
@@ -411,7 +411,7 @@ public class GifImage
                     int k = line * width;
                     int dlim = Math.min(ix + iw, width);
                     int sx = i * iw;
-                    
+
                     for (int dx = ix; dx < dlim; dx++) {
                         int index = ((int) pixels[sx++]) & 0xff;
                         int c = act[index];
@@ -586,50 +586,50 @@ public class GifImage
 
                     code = datum & code_mask;
                     datum >>= code_size;
-                        bits -= code_size;
+                    bits -= code_size;
 
-                        // Interpret the code
+                    // Interpret the code
 
-                        if ((code > available) || (code == end_of_information))
-                            break;
-                        if (code == clear) {
-                            // Reset decoder.
-                            code_size = data_size + 1;
-                            code_mask = (1 << code_size) - 1;
-                            available = clear + 2;
-                            old_code = NullCode;
-                            continue;
-                        }
-                        if (old_code == NullCode) {
-                            pixelStack[top++] = suffix[code];
-                            old_code = code;
-                            first = code;
-                            continue;
-                        }
-                        in_code = code;
-                        if (code == available) {
-                            pixelStack[top++] = (byte) first;
-                            code = old_code;
-                        }
-                        while (code > clear) {
-                            pixelStack[top++] = suffix[code];
-                            code = prefix[code];
-                        }
-                        first = ((int) suffix[code]) & 0xff;
-
-                        // Add a new string to the string table,
-
-                        if (available >= MaxStackSize)
-                            break;
+                    if ((code > available) || (code == end_of_information))
+                        break;
+                    if (code == clear) {
+                        // Reset decoder.
+                        code_size = data_size + 1;
+                        code_mask = (1 << code_size) - 1;
+                        available = clear + 2;
+                        old_code = NullCode;
+                        continue;
+                    }
+                    if (old_code == NullCode) {
+                        pixelStack[top++] = suffix[code];
+                        old_code = code;
+                        first = code;
+                        continue;
+                    }
+                    in_code = code;
+                    if (code == available) {
                         pixelStack[top++] = (byte) first;
-                        prefix[available] = (short) old_code;
-                        suffix[available] = (byte) first;
-                        available++;
-                        if (((available & code_mask) == 0) && (available < MaxStackSize)) {
-                            code_size++;
-                            code_mask += available;
-                        }
-                        old_code = in_code;
+                        code = old_code;
+                    }
+                    while (code > clear) {
+                        pixelStack[top++] = suffix[code];
+                        code = prefix[code];
+                    }
+                    first = ((int) suffix[code]) & 0xff;
+
+                    // Add a new string to the string table,
+
+                    if (available >= MaxStackSize)
+                        break;
+                    pixelStack[top++] = (byte) first;
+                    prefix[available] = (short) old_code;
+                    suffix[available] = (byte) first;
+                    available++;
+                    if (((available & code_mask) == 0) && (available < MaxStackSize)) {
+                        code_size++;
+                        code_mask += available;
+                    }
+                    old_code = in_code;
                 }
 
                 // Pop a pixel off the pixel stack.
@@ -745,18 +745,18 @@ public class GifImage
                 int code = read();
                 switch (code) {
 
-                case 0x2C: // image separator
+                    case 0x2C: // image separator
                     readImage();
                     break;
 
-                case 0x21: // extension
+                    case 0x21: // extension
                     code = read();
                     switch (code) {
-                    case 0xf9: // graphics control extension
+                        case 0xf9: // graphics control extension
                         readGraphicControlExt();
                         break;
 
-                    case 0xff: // application extension
+                        case 0xff: // application extension
                         readBlock();
                         String app = "";
                         for (int i = 0; i < 11; i++) {
@@ -768,19 +768,19 @@ public class GifImage
                             skip(); // don't care
                         break;
 
-                    default: // uninteresting extension
+                        default: // uninteresting extension
                         skip();
                     }
                     break;
 
-                case 0x3b: // terminator
+                    case 0x3b: // terminator
                     done = true;
                     break;
 
-                case 0x00: // bad byte, but keep going and see what happens
+                    case 0x00: // bad byte, but keep going and see what happens
                     break;
 
-                default:
+                    default:
                     status = STATUS_FORMAT_ERROR;
                 }
             }

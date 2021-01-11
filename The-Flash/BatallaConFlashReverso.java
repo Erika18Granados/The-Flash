@@ -6,17 +6,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MundoEjemploParaPersonaje extends Pantalla
+public class BatallaConFlashReverso extends Pantalla
 {
 
     /**
      * Constructor for objects of class MyWorld.
      * 
      */
-    public MundoEjemploParaPersonaje()
+    public BatallaConFlashReverso()
     {
-        new Flash(this);
-        new FlashReverso(this);
         new CargadorDePantallaDeMisiones();
     }
 }

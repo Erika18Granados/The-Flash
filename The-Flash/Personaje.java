@@ -19,8 +19,10 @@ public abstract class Personaje extends Actor
     private int velocidadDeMovimiento;
     private int movimientoEnX;
     private int movimientoEnY;
+    private int vida;
     private ArrayList<GifImage> spritesDePersonaje;
     private GreenfootImage imagenDePersonaje;
+    public SimpleTimer cronometro;
     
     private Pantalla pantalla;
     /*
@@ -34,8 +36,9 @@ public abstract class Personaje extends Actor
     /**
      * Constructor for objects of class Personaje
      */
-    public void creaPersonaje(Pantalla pantalla, int x, int y)
+    public void creaPersonaje(Pantalla pantalla, int x, int y, int vida)
     {
+        this.vida = vida;
         movimientoEnX = 0;
         movimientoEnY = 0;
         velocidadDeMovimiento = VELOCIDAD;
@@ -43,20 +46,26 @@ public abstract class Personaje extends Actor
         pantalla = pantalla;
     }
     
-    // Personaje sin interfaz de jugador
-    public void creaPersonaje(int velocidad, GreenfootImage imagenDePersonaje, Pantalla pantalla,int x, int y)
+    // Personaje con animacion sin interfaz
+    public void creaPersonaje(int velocidad, ArrayList<GifImage> spritesDePersonaje, Pantalla pantalla, int x, int y, int vida)
     {
+        this.vida = vida;
+        cronometro = new SimpleTimer();
         movimientoEnX = 0;
         movimientoEnY = 0;
         velocidadDeMovimiento = velocidad;
-        this.imagenDePersonaje = imagenDePersonaje;
+        this.spritesDePersonaje = spritesDePersonaje;
+        estableceSprite(0);
+        this.spritesDePersonaje.forEach(sprite -> sprite.pause());
         pantalla.addObject(this, x, y);
         pantalla = pantalla;
     }
     
     // Personaje con imagen
-    public void creaPersonaje(int velocidad, InterfazDeJugador interfazDeJugador, GreenfootImage imagenDePersonaje, Pantalla pantalla ,int x, int y)
+    public void creaPersonaje(int velocidad, InterfazDeJugador interfazDeJugador, GreenfootImage imagenDePersonaje, Pantalla pantalla ,int x, int y, int vida)
     {
+        this.vida = vida;
+        cronometro = new SimpleTimer();
         movimientoEnX = 0;
         movimientoEnY = 0;
         velocidadDeMovimiento = velocidad;
@@ -67,8 +76,10 @@ public abstract class Personaje extends Actor
     }
 
     // Personaje con animacion
-    public void creaPersonaje(int velocidad, InterfazDeJugador interfazDeJugador, ArrayList<GifImage> spritesDePersonaje, Pantalla pantalla, int x, int y)
+    public void creaPersonaje(int velocidad, InterfazDeJugador interfazDeJugador, ArrayList<GifImage> spritesDePersonaje, Pantalla pantalla, int x, int y, int vida)
     {
+        this.vida = vida;
+        cronometro = new SimpleTimer();
         movimientoEnX = 0;
         movimientoEnY = 0;
         velocidadDeMovimiento = velocidad;
@@ -81,9 +92,10 @@ public abstract class Personaje extends Actor
     }
 
     public void muevePersonaje(DireccionDePersonaje direccionDeMovimiento) {
+        direccion = direccionDeMovimiento;
         if(getY() >= ResolucionDePantalla.LIM_AREA_JUEGO)
         {
-            switch(direccionDeMovimiento)
+            switch(direccion)
             {
                 // DIRECCIONES BASICAS
                 case ARRIBA:
@@ -141,10 +153,9 @@ public abstract class Personaje extends Actor
             }
             setLocation(getX() + movimientoEnX, getY() + movimientoEnY);
         } else setLocation(getX(), getY()+1);
-        //spritesDePersonaje.get(0).animaSprite(); <<<---- PARA LOS DEMAS PERSONAJES LLAMAR ESTA FUNCION DENTRO DEL SWITCH O EN OTRO LUGAR
     }
     
-    abstract void colisiona();
+    abstract boolean colisiona();
 
     public InterfazDeJugador obtenInterfazDeJugador() {
         return interfazDeJugador;
@@ -163,7 +174,7 @@ public abstract class Personaje extends Actor
     }
     
     public Pantalla obtenPantalla() {
-        return pantalla;
+        return pantalla;    
     }
     
     public GifImage obtenSprite(int numeroDeSprite) {
